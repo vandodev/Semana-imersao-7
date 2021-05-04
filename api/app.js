@@ -6,8 +6,6 @@ app.use(express.json());
 
 const Anuncio = require('./Models/Anuncio');
 
-
-// const db = require("./Models/db");
 //Listar -> http://localhost:3000
 app.get('/', function (req, res){
   Anuncio.findAll({order:[['id', 'DESC']]}).then(function(anuncios){
@@ -17,12 +15,10 @@ app.get('/', function (req, res){
 
 //Listagem por id ->http://localhost:3000/visualizar/11
 app.get('/visualizar/:id', async (req, res) =>{
-    //  res.send('ID: '+req.params.id);
     await Anuncio.findByPk(req.params.id)
      .then(anuncio => {
        return res.json({
          error:false,
-         //anuncio:anuncio
          anuncio
        })
      }).catch(function(erro){
@@ -47,6 +43,24 @@ app.post('/cadastrar', async (req, res) => {
       message:"Erro ao cadastrar"
     });
   })
+});
+
+//Editar -> http://localhost:3000/editar (edição via json)
+app.put('/editar', async (req, res) => {
+
+  await Anuncio.update(req.body, {
+      where: { id: req.body.id }
+  }).then(function () {
+      return res.json({
+          error: false,
+          message: "Anúncio editado com sucesso!"
+      });
+  }).catch(function (erro) {
+      return res.status(400).json({
+          error: true,
+          message: "Erro: Anúncio não editado com sucesso!"
+      });
+  });
 });
 
 const PORT = 3000;
