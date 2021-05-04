@@ -1,10 +1,18 @@
 const express  = require('express');
-
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
 
 const Anuncio = require('./Models/Anuncio');
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type, Authorization");
+  app.use(cors());
+  next();
+});
 
 //Listar -> http://localhost:3000
 app.get('/', async (req, res) => {
