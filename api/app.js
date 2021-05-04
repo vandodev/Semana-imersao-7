@@ -10,7 +10,10 @@ const Anuncio = require('./Models/Anuncio');
 // const db = require("./Models/db");
 
 app.get('/', (req, res) => {
-  res.send("olá mundo.")
+  Anuncio.findAll({order:[['id', 'DESC']]}).then(function(anuncios){
+    //res.json({anuncios:anuncios});
+    res.json({anuncios});
+  });
 });
 
 app.post('/cadastrar', async (req, res) => {
