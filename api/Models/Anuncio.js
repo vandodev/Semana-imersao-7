@@ -22,5 +22,5 @@ const Anuncio = db.define('anuncios', {
 //Criar a tabela 
 //Após tabela criada comentar linha abaixo
 //Anuncio.sync({force:true});
-
+Anuncio.sync();
 module.exports = Anuncio;

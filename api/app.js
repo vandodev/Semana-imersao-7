@@ -8,13 +8,30 @@ const Anuncio = require('./Models/Anuncio');
 
 
 // const db = require("./Models/db");
-
-app.get('/', (req, res) => {
+//Listar -> http://localhost:3000
+app.get('/', function (req, res){
   Anuncio.findAll({order:[['id', 'DESC']]}).then(function(anuncios){
-    //res.json({anuncios:anuncios});
-    res.json({anuncios});
+      res.json({anuncios});
   });
 });
+
+//Listagem por id ->http://localhost:3000/visualizar/11
+app.get('/visualizar/:id', async (req, res) =>{
+    //  res.send('ID: '+req.params.id);
+    await Anuncio.findByPk(req.params.id)
+     .then(anuncio => {
+       return res.json({
+         error:false,
+         //anuncio:anuncio
+         anuncio
+       })
+     }).catch(function(erro){
+        return res.status(400).json({
+          error:true,
+          message:"Anúncio não encontrado"
+        });
+     });
+ });
 
 app.post('/cadastrar', async (req, res) => {
   const resuktCad = await Anuncio.create(
