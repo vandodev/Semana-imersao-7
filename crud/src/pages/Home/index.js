@@ -1,8 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import axios from 'axios';
 import {Container, Table} from 'reactstrap';
+
+import { api } from '../../config';
 
 
 export const Home = () => {
+
+  // const [data, setData] = useState([]);
+
+  const getAnuncios = async () => {
+    await axios.get(api)
+        .then((respose) => {
+          console.log(respose);
+            //console.log(respose.data.anuncios);
+            //setData(respose.data.anuncios);
+        })
+        .catch(() => {
+         console.log('Erro ao conectar')
+        });
+  };
+
+  useEffect(() => {
+    getAnuncios();
+  },[]);
+
+
   return (
     <div>
       <Container>
