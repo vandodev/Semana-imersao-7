@@ -7,8 +7,8 @@ app.use(express.json());
 const Anuncio = require('./Models/Anuncio');
 
 //Listar -> http://localhost:3000
-app.get('/', function (req, res){
-  Anuncio.findAll({order:[['id', 'DESC']]}).then(function(anuncios){
+app.get('/', async (req, res) => {
+  await Anuncio.findAll({order:[['id', 'DESC']]}).then(function(anuncios){
       res.json({anuncios});
   });
 });
@@ -30,7 +30,7 @@ app.get('/visualizar/:id', async (req, res) =>{
  });
 
 app.post('/cadastrar', async (req, res) => {
-  const resuktCad = await Anuncio.create(
+  const resultCad = await Anuncio.create(
     req.body
   ).then(function (){
     return res.json({
@@ -58,7 +58,23 @@ app.put('/editar', async (req, res) => {
   }).catch(function (erro) {
       return res.status(400).json({
           error: true,
-          message: "Erro: Anúncio não editado com sucesso!"
+          message: "Erro ao editar anúncio!"
+      });
+  });
+});
+
+app.delete('/apagar/:id', async (req, res) => {
+  await Anuncio.destroy({
+      where: { id: req.params.id }
+  }).then(function () {
+      return res.json({
+          error: false,
+          message: "Anúncio apagado com sucesso!"
+      });
+  }).catch(function (erro) {
+      return res.status(400).json({
+          error: true,
+          message: "Erro ao deletar anúncio!"
       });
   });
 });
