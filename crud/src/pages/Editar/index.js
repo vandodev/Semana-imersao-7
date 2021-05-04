@@ -1,10 +1,11 @@
 import React from 'react';
+import {Container} from 'reactstrap';
 
 export const Editar = () => {
   return (
-      <div>
-         <h1>Editar</h1> 
-      </div>
+    <Container>
+        <h1>Editar</h1>  
+    </Container>
     
   );
 }

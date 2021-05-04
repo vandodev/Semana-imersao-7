@@ -1,10 +1,11 @@
 import React from 'react';
+import {Container} from 'reactstrap';
 
 export const Visualizar = () => {
   return (
-      <div>
-         <h1>Visualizar</h1> 
-      </div>
+    <Container>
+      <h1>Visualizar</h1>  
+    </Container>
     
   );
 }
