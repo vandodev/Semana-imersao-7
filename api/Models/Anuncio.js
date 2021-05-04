@@ -19,7 +19,8 @@ const Anuncio = db.define('anuncios', {
     }
 });
 
-//Criar a tabela
-Anuncio.sync({force:true});
+//Criar a tabela 
+//Após tabela criada comentar linha abaixo
+//Anuncio.sync({force:true});
 
 module.exports = Anuncio;
