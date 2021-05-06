@@ -1,25 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Container, Table} from 'reactstrap';
+import {Container, Table, Alert} from 'reactstrap';
 
 import { api } from '../../config';
 
 
 export const Home = () => {
 
-  // const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  const [status, setStatus] = useState({
+    type: '',
+    mensagem: ''
+});
 
   const getAnuncios = async () => {
     await axios.get(api)
         .then((respose) => {
-          console.log(respose);
             //console.log(respose.data.anuncios);
-            //setData(respose.data.anuncios);
+            setData(respose.data.anuncios);
         })
         .catch(() => {
-         console.log('Erro ao conectar')
+            setStatus({
+                type: 'error',
+                mensagem: 'Erro: Tente mais tarde!'
+            });
         });
-  };
+};
 
   useEffect(() => {
     getAnuncios();
@@ -38,6 +44,9 @@ export const Home = () => {
           </div>
         </div>
 
+        {status.type === 'error' ? <Alert color="danger">{status.mensagem}</Alert> : ""}
+        {status.type === 'success' ? <Alert color="success">{status.mensagem}</Alert> : ""}
+                
         <Table striped hover>
             <thead>
               <tr>
@@ -48,25 +57,15 @@ export const Home = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td className="text-center">Botão</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td className="text-center">Botão</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td className="text-center">Botão</td>
-              </tr>
-            </tbody>
+                        {data.map(item => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.titulo}</td>
+                                <td>{item.descricao}</td>
+                                <td className="text-center">Botão</td>
+                            </tr>
+                        ))}
+                    </tbody>
         </Table>
       </Container>
     </div>
