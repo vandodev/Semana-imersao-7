@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Container, Table, Alert} from 'reactstrap';
 
 import { api } from '../../config';
+import { Link } from 'react-router-dom';
 
 
 export const Home = () => {
@@ -40,7 +41,7 @@ export const Home = () => {
             <h1>Anúncios</h1>
           </div>
           <div className="p-2">
-            <a href="/cadastrar" className="btn btn-outline-success btn-sm">Cadastrar</a>
+            <Link to="/cadastrar" className="btn btn-outline-success btn-sm">Cadastrar</Link>
           </div>
         </div>
 
@@ -52,7 +53,6 @@ export const Home = () => {
               <tr>
                 <th>ID</th>
                 <th>Titulo</th>
-                <th>Descrição</th>
                 <th className="text-center">Ações</th>
               </tr>
             </thead>
@@ -61,8 +61,9 @@ export const Home = () => {
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>{item.titulo}</td>
-                                <td>{item.descricao}</td>
-                                <td className="text-center">Botão</td>
+                                <td className="text-center">
+                                <Link to={"/visualizar/" + item.id} className="btn btn-outiline-primary btn-sm">Visualizar</Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
