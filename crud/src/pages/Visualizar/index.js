@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export const Visualizar = (props) => {
 
   const [data, setData] = useState([]);
-  const [id, setId] = useState(props.match.params.id);
+  const [id] = useState(props.match.params.id);
 
   const [status, setStatus] = useState({
     type: '',
@@ -43,9 +43,9 @@ export const Visualizar = (props) => {
             <Link to="/" className="btn btn-outline-info btn-sm">Listar</Link>
           </div>
         </div>
-
-        <hr className="m-1" />
+       
         {status.type === 'error' ? <Alert color="danger">{status.mensagem}</Alert> : ""}
+        <hr className="m-1" />
 
         <dl className="row">
 
