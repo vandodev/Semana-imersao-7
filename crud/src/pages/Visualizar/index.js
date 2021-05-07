@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import {Container} from 'reactstrap';
+import {Container, Alert} from 'reactstrap';
 import { api } from '../../config';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +9,11 @@ export const Visualizar = (props) => {
   const [data, setData] = useState([]);
   const [id, setId] = useState(props.match.params.id);
 
+  const [status, setStatus] = useState({
+    type: '',
+    mensagem: ''
+  });
+
   useEffect(()=>{
 
     const getAnuncio = async () =>{
@@ -16,7 +21,10 @@ export const Visualizar = (props) => {
       .then((response) =>{
         setData(response.data.anuncio);        
       }).catch(()=>{
-        console.log("Erro tente mais tarde");
+        setStatus({
+          type: 'error',
+          mensagem: 'Erro: Tente mais tarde!'
+        });
       })
     }
 
@@ -37,6 +45,7 @@ export const Visualizar = (props) => {
         </div>
 
         <hr className="m-1" />
+        {status.type === 'error' ? <Alert color="danger">{status.mensagem}</Alert> : ""}
 
         <dl className="row">
 
